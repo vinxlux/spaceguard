@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4 fw-bold">SPACEGUARD 🚀</h1>
+
+    <p class="lead mt-3">
+        Sistema de monitoramento ambiental via satélites desenvolvido para a Global Solution FIAP.
+    </p>
+
+    <p>
+        Aplicação ASP.NET Core integrada com PostgreSQL, Docker e Azure.
+    </p>
+
+    <hr class="my-4" />
+
+    <h3>Endpoints da API</h3>
+
+    <p class="text-muted">
+        Acesse os endpoints abaixo para visualizar os dados cadastrados no banco.
+    </p>
+
+    <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+        <a class="btn btn-primary" href="/api/satelites" target="_blank">
+            Satélites
+        </a>
+
+        <a class="btn btn-success" href="/api/indicadores" target="_blank">
+            Indicadores Ambientais
+        </a>
+
+        <a class="btn btn-warning" href="/api/alertas" target="_blank">
+            Alertas Ambientais
+        </a>
+    </div>
+
+    <div class="mt-5">
+        <h4>Status do Projeto</h4>
+
+        <ul class="list-unstyled mt-3">
+            <li>✅ Aplicação rodando em container Docker</li>
+            <li>✅ Banco PostgreSQL persistente</li>
+            <li>✅ Entity Framework Core com migrations</li>
+            <li>✅ Deploy em máquina virtual Azure</li>
+            <li>✅ CRUD disponível via API REST</li>
+        </ul>
+    </div>
+</div>

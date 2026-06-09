@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_rm564615
+    environment:
+      POSTGRES_DB: spaceguard
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - spaceguard_network
+
+  app:
+    build:
+      context: ../SpaceGuard
+      dockerfile: Dockerfile
+    container_name: app_rm564615
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=spaceguard;Username=postgres;Password=postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - spaceguard_network
+
+volumes:
+  postgres_data:
+
+networks:
+  spaceguard_network:
