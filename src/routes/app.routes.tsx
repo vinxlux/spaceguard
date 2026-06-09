@@ -1,4 +1,4 @@
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -6,11 +6,27 @@ import { DashboardScreen } from "../screens/DashboardScreen";
 import { RegionDetailsScreen } from "../screens/RegionDetailsScreen";
 import { RegionFormScreen } from "../screens/RegionFormScreen";
 import { RegionListScreen } from "../screens/RegionListScreen";
+import { RegionEditScreen } from "../screens/RegionEditScreen";
 import { ProjectPresentationScreen } from "../screens/ProjectPresentationScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
+import { RegionCardData } from "../types/region";
 
-const Stack = createNativeStackNavigator();
-const Tabs = createBottomTabNavigator();
+export type AppStackParamList = {
+  Tabs: undefined;
+  "Detalhes da Região": { region: RegionCardData };
+  "Editar Região": { regionId: number };
+};
+
+export type AppTabsParamList = {
+  Dashboard: undefined;
+  "Regiões": undefined;
+  Cadastro: undefined;
+  "Apresentação": undefined;
+  "Configurações": undefined;
+};
+
+const Stack = createNativeStackNavigator<AppStackParamList>();
+const Tabs = createBottomTabNavigator<AppTabsParamList>();
 
 const navigationTheme = {
   ...DefaultTheme,
@@ -60,6 +76,7 @@ export function AppRoutes() {
       >
         <Stack.Screen name="Tabs" component={AppTabs} options={{ headerShown: false }} />
         <Stack.Screen name="Detalhes da Região" component={RegionDetailsScreen} />
+        <Stack.Screen name="Editar Região" component={RegionEditScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

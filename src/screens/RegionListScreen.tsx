@@ -1,13 +1,21 @@
 import { useCallback, useMemo } from "react";
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { RegionCard } from "../components/RegionCard";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { useRegions } from "../hooks/useRegions";
+import { AppStackParamList } from "../routes/app.routes";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RegionCardData } from "../types/region";
 
 export function RegionListScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const { regions, loading, errorMessage, refreshRegions } = useRegions();
+
+  const handleOpenDetails = useCallback((region: RegionCardData) => {
+    navigation.navigate("Detalhes da Região", { region });
+  }, [navigation]);
 
   useFocusEffect(
     useCallback(() => {
@@ -29,7 +37,7 @@ export function RegionListScreen() {
       <FlatList
         data={regions}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => <RegionCard region={item} />}
+        renderItem={({ item }) => <RegionCard region={item} onPress={handleOpenDetails} />}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={() => void refreshRegions()} />}
         ListHeaderComponent={
@@ -43,7 +51,7 @@ export function RegionListScreen() {
         showsVerticalScrollIndicator={false}
       />
     );
-  }, [errorMessage, loading, regions, refreshRegions]);
+  }, [errorMessage, handleOpenDetails, loading, regions, refreshRegions]);
 
   return (
     <ScreenContainer
