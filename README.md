@@ -106,12 +106,12 @@ npm install
 npm run start
 ```
 
-Se estiver usando o backend local com `dotnet run`, o app usa `http://10.0.2.2:5129/api` no Android emulador e `http://localhost:5129/api` em iOS/web por padrão.
-Se estiver usando Docker, defina `EXPO_PUBLIC_API_BASE_URL` com `http://10.0.2.2:8080/api` no Android emulador ou `http://localhost:8080/api` em iOS/web.
+O cliente Axios tenta automaticamente as portas locais `5129` e `8080` para reduzir falhas de conexão entre o backend em desenvolvimento e o backend em Docker.
+Se precisar forçar um host específico, defina `EXPO_PUBLIC_API_BASE_URL`.
 
 ## Configuração da API
 
-O cliente Axios está centralizado em `mobile/src/api/apiClient.ts`, com base URL configurável, timeout e tratamento global de erros.
+O cliente Axios está centralizado em `src/api/apiClient.ts`, com base URL configurável, fallback automático entre portas locais, timeout e tratamento global de erros.
 
 ## Prints
 
