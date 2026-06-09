@@ -106,8 +106,8 @@ npm install
 npm run start
 ```
 
-Se estiver usando emulador Android, o app usa `http://10.0.2.2:8080/api` por padrão.
-Para dispositivo físico ou outro host, defina `EXPO_PUBLIC_API_BASE_URL`.
+Se estiver usando o backend local com `dotnet run`, o app usa `http://10.0.2.2:5129/api` no Android emulador e `http://localhost:5129/api` em iOS/web por padrão.
+Se estiver usando Docker, defina `EXPO_PUBLIC_API_BASE_URL` com `http://10.0.2.2:8080/api` no Android emulador ou `http://localhost:8080/api` em iOS/web.
 
 ## Configuração da API
 
