@@ -1,5 +1,6 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { RegionCard } from "../components/RegionCard";
 import { ScreenContainer } from "../components/ScreenContainer";
@@ -7,6 +8,12 @@ import { useRegions } from "../hooks/useRegions";
 
 export function RegionListScreen() {
   const { regions, loading, errorMessage, refreshRegions } = useRegions();
+
+  useFocusEffect(
+    useCallback(() => {
+      void refreshRegions();
+    }, [refreshRegions]),
+  );
 
   const content = useMemo(() => {
     if (loading) {
