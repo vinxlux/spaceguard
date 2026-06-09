@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "SpaceGuard",
+    "slug": "spaceguard",
+    "scheme": "spaceguard",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["ios", "android", "web"],
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.spaceguard.app"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

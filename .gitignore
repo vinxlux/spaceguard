@@ -1,0 +1,16 @@
+node_modules/
+.expo/
+.expo-shared/
+dist/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+android/
+ios/bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
