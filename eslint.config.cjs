@@ -7,6 +7,6 @@ module.exports = [
     ignores: ["backend/**", "node_modules/**", "dist/**", ".expo/**"],
   },
   js.configs.recommended,
-  expoConfig,
+  ...expoConfig,
   prettierConfig,
 ];

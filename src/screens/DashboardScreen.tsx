@@ -1,31 +1,29 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import { MetricCard } from "../components/MetricCard";
+import { ScreenContainer } from "../components/ScreenContainer";
 
 export function DashboardScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Dashboard</Text>
-      <Text style={styles.description}>Visão geral do monitoramento por satélites.</Text>
-    </View>
+    <ScreenContainer
+      title="Dashboard"
+      description="Visão geral do monitoramento por satélites e temperatura das regiões."
+    >
+      <View style={styles.grid}>
+        <MetricCard label="Temperatura média" value="26°C" detail="Dados consolidados das regiões" />
+        <MetricCard label="Regiões ativas" value="5" detail="Cobertura nacional completa" accentColor="#4CAF50" />
+      </View>
+      <View style={styles.grid}>
+        <MetricCard label="Satélites" value="3" detail="Todos em operação" accentColor="#F44336" />
+        <MetricCard label="Última atualização" value="Agora" detail="Leitura mais recente disponível" />
+      </View>
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0B1026",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 24,
-  },
-  title: {
-    color: "#FFFFFF",
-    fontSize: 28,
-    fontWeight: "800",
-  },
-  description: {
-    marginTop: 8,
-    color: "rgba(255, 255, 255, 0.75)",
-    fontSize: 16,
-    textAlign: "center",
+  grid: {
+    flexDirection: "row",
+    gap: 12,
   },
 });
