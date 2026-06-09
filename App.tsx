@@ -3,13 +3,26 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppRoutes } from "./src/routes";
+import { ThemeProvider, useThemeMode } from "./src/theme/ThemeContext";
+
+function AppShell() {
+  const { themeMode } = useThemeMode();
+
+  return (
+    <>
+      <StatusBar style={themeMode === "dark" ? "light" : "dark"} />
+      <AppRoutes />
+    </>
+  );
+}
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <StatusBar style="light" />
-        <AppRoutes />
+        <ThemeProvider>
+          <AppShell />
+        </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

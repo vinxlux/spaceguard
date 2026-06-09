@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { RegionCardData } from "../types/region";
+import { useThemeMode } from "../theme/ThemeContext";
 
 type RegionCardProps = {
   region: RegionCardData;
@@ -8,18 +9,19 @@ type RegionCardProps = {
 };
 
 export function RegionCard({ region, onPress }: RegionCardProps) {
+  const { theme } = useThemeMode();
   const statusColor =
-    region.status === "Crítico" ? "#F44336" : region.status === "Atenção" ? "#FFB300" : "#4CAF50";
+    region.status === "Crítico" ? theme.colors.danger : region.status === "Atenção" ? theme.colors.warning : theme.colors.success;
 
   return (
     <Pressable
-      style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
+      style={({ pressed }) => [styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.cardBorder }, pressed && styles.cardPressed]}
       onPress={() => onPress?.(region)}
     >
       <View style={styles.row}>
         <View style={styles.titleBlock}>
-          <Text style={styles.title}>{region.nome}</Text>
-          <Text style={styles.subtitle}>{region.paisOrigem}</Text>
+          <Text style={[styles.title, { color: theme.colors.text }]}>{region.nome}</Text>
+          <Text style={[styles.subtitle, { color: theme.colors.textMuted }]}>{region.paisOrigem}</Text>
         </View>
 
         <View style={[styles.badge, { borderColor: statusColor }]}>
@@ -29,13 +31,13 @@ export function RegionCard({ region, onPress }: RegionCardProps) {
 
       <View style={styles.footer}>
         <View>
-          <Text style={styles.label}>Temperatura estimada</Text>
-          <Text style={styles.temperature}>{region.temperatura}°C</Text>
+          <Text style={[styles.label, { color: theme.colors.textMuted }]}>Temperatura estimada</Text>
+          <Text style={[styles.temperature, { color: theme.colors.text }]}>{region.temperatura}°C</Text>
         </View>
 
         <View style={styles.metaBlock}>
-          <Text style={styles.label}>Origem</Text>
-          <Text style={styles.metaValue}>{region.origem === "api" ? "API .NET" : "Modo demo"}</Text>
+          <Text style={[styles.label, { color: theme.colors.textMuted }]}>Origem</Text>
+          <Text style={[styles.metaValue, { color: theme.colors.text }]}>{region.origem === "api" ? "API .NET" : "Modo demo"}</Text>
         </View>
       </View>
     </Pressable>
@@ -44,10 +46,8 @@ export function RegionCard({ region, onPress }: RegionCardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "rgba(20, 40, 80, 0.9)",
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
     padding: 16,
     gap: 16,
   },
@@ -66,12 +66,10 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   title: {
-    color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "800",
   },
   subtitle: {
-    color: "rgba(255, 255, 255, 0.7)",
     fontSize: 14,
   },
   badge: {
@@ -90,13 +88,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   label: {
-    color: "rgba(255, 255, 255, 0.62)",
     fontSize: 12,
     textTransform: "uppercase",
     letterSpacing: 0.7,
   },
   temperature: {
-    color: "#FFFFFF",
     fontSize: 28,
     fontWeight: "800",
     marginTop: 4,
@@ -105,7 +101,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   metaValue: {
-    color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "700",
     marginTop: 4,

@@ -6,12 +6,14 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { AppStackParamList } from "../routes/app.routes";
 import { deleteRegion } from "../services/satelliteService";
+import { useThemeMode } from "../theme/ThemeContext";
 
 function formatDate(dateValue: string) {
   return new Date(dateValue).toLocaleDateString("pt-BR");
 }
 
 export function RegionDetailsScreen() {
+  const { theme } = useThemeMode();
   const route = useRoute<RouteProp<AppStackParamList, "Detalhes da Região">>();
   const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const region = route.params.region;
@@ -45,21 +47,21 @@ export function RegionDetailsScreen() {
   return (
     <ScreenContainer title="Detalhes da Região" description="Os dados completos da região e seus indicadores aparecem nesta tela.">
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.card}>
-          <Text style={styles.label}>Nome</Text>
-          <Text style={styles.value}>{region.nome}</Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.cardBorder }]}>
+          <Text style={[styles.label, { color: theme.colors.textMuted }]}>Nome</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>{region.nome}</Text>
 
-          <Text style={styles.label}>País de origem</Text>
-          <Text style={styles.value}>{region.paisOrigem}</Text>
+          <Text style={[styles.label, { color: theme.colors.textMuted }]}>País de origem</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>{region.paisOrigem}</Text>
 
-          <Text style={styles.label}>Data de lançamento</Text>
-          <Text style={styles.value}>{dateLabel}</Text>
+          <Text style={[styles.label, { color: theme.colors.textMuted }]}>Data de lançamento</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>{dateLabel}</Text>
 
-          <Text style={styles.label}>Temperatura estimada</Text>
-          <Text style={styles.value}>{region.temperatura}°C</Text>
+          <Text style={[styles.label, { color: theme.colors.textMuted }]}>Temperatura estimada</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>{region.temperatura}°C</Text>
 
-          <Text style={styles.label}>Status</Text>
-          <Text style={styles.value}>{region.status}</Text>
+          <Text style={[styles.label, { color: theme.colors.textMuted }]}>Status</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>{region.status}</Text>
         </View>
 
         <View style={styles.actions}>
@@ -85,19 +87,15 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 18,
     borderRadius: 20,
-    backgroundColor: "rgba(20, 40, 80, 0.9)",
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.12)",
   },
   label: {
-    color: "rgba(255, 255, 255, 0.62)",
     fontSize: 12,
     textTransform: "uppercase",
     letterSpacing: 0.7,
     marginTop: 8,
   },
   value: {
-    color: "#FFFFFF",
     fontSize: 16,
     lineHeight: 22,
     fontWeight: "700",

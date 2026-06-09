@@ -8,8 +8,10 @@ import { useRegions } from "../hooks/useRegions";
 import { AppStackParamList } from "../routes/app.routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RegionCardData } from "../types/region";
+import { useThemeMode } from "../theme/ThemeContext";
 
 export function RegionListScreen() {
+  const { theme } = useThemeMode();
   const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const { regions, loading, errorMessage, refreshRegions } = useRegions();
 
@@ -27,8 +29,8 @@ export function RegionListScreen() {
     if (loading) {
       return (
         <View style={styles.centerState}>
-          <ActivityIndicator size="large" color="#00A8E8" />
-          <Text style={styles.centerStateText}>Carregando regiões monitoradas...</Text>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <Text style={[styles.centerStateText, { color: theme.colors.textMuted }]}>Carregando regiões monitoradas...</Text>
         </View>
       );
     }
@@ -42,15 +44,15 @@ export function RegionListScreen() {
         refreshControl={<RefreshControl refreshing={loading} onRefresh={() => void refreshRegions()} />}
         ListHeaderComponent={
           errorMessage ? (
-            <View style={styles.banner}>
-              <Text style={styles.bannerText}>{errorMessage}</Text>
+            <View style={[styles.banner, { backgroundColor: theme.colors.surfaceMuted, borderColor: theme.colors.border }]}>
+              <Text style={[styles.bannerText, { color: theme.colors.text }]}>{errorMessage}</Text>
             </View>
           ) : null
         }
         ListEmptyComponent={
           <View style={styles.emptyState}>
-            <Text style={styles.emptyStateTitle}>Nenhuma região cadastrada</Text>
-            <Text style={styles.emptyStateText}>
+            <Text style={[styles.emptyStateTitle, { color: theme.colors.text }]}>Nenhuma região cadastrada</Text>
+            <Text style={[styles.emptyStateText, { color: theme.colors.textMuted }]}>
               A lista fica vazia quando não há registros na API.
             </Text>
           </View>
@@ -86,19 +88,15 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
   },
   centerStateText: {
-    color: "rgba(255, 255, 255, 0.78)",
     fontSize: 15,
   },
   banner: {
-    backgroundColor: "rgba(244, 67, 54, 0.14)",
-    borderColor: "rgba(244, 67, 54, 0.45)",
     borderWidth: 1,
     borderRadius: 16,
     padding: 14,
     marginBottom: 16,
   },
   bannerText: {
-    color: "#FFFFFF",
     fontSize: 14,
     lineHeight: 20,
   },
@@ -109,13 +107,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   emptyStateTitle: {
-    color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "800",
     textAlign: "center",
   },
   emptyStateText: {
-    color: "rgba(255, 255, 255, 0.75)",
     fontSize: 14,
     lineHeight: 20,
     textAlign: "center",

@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
+import { useThemeMode } from "../theme/ThemeContext";
+
 type MetricCardProps = {
   label: string;
   value: string;
@@ -8,11 +10,13 @@ type MetricCardProps = {
 };
 
 export function MetricCard({ label, value, detail, accentColor = "#00A8E8" }: MetricCardProps) {
+  const { theme } = useThemeMode();
+
   return (
-    <View style={[styles.card, { borderColor: accentColor }]}> 
-      <Text style={styles.label}>{label}</Text>
-      <Text style={styles.value}>{value}</Text>
-      {detail ? <Text style={styles.detail}>{detail}</Text> : null}
+    <View style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: accentColor }]}> 
+      <Text style={[styles.label, { color: theme.colors.textMuted }]}>{label}</Text>
+      <Text style={[styles.value, { color: theme.colors.text }]}>{value}</Text>
+      {detail ? <Text style={[styles.detail, { color: theme.colors.textMuted }]}>{detail}</Text> : null}
     </View>
   );
 }
@@ -23,24 +27,20 @@ const styles = StyleSheet.create({
     minHeight: 120,
     borderWidth: 1,
     borderRadius: 20,
-    backgroundColor: "rgba(20, 40, 80, 0.9)",
     padding: 16,
     gap: 8,
   },
   label: {
-    color: "rgba(255, 255, 255, 0.72)",
     fontSize: 13,
     fontWeight: "600",
     textTransform: "uppercase",
     letterSpacing: 0.6,
   },
   value: {
-    color: "#FFFFFF",
     fontSize: 28,
     fontWeight: "800",
   },
   detail: {
-    color: "rgba(255, 255, 255, 0.78)",
     fontSize: 14,
     lineHeight: 20,
   },

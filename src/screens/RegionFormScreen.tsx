@@ -6,8 +6,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FormField } from "../components/FormField";
 import { createRegion } from "../services/satelliteService";
 import { AppStackParamList } from "../routes/app.routes";
+import { useThemeMode } from "../theme/ThemeContext";
 
 export function RegionFormScreen() {
+  const { theme } = useThemeMode();
   const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const [nome, setNome] = useState("");
   const [paisOrigem, setPaisOrigem] = useState("");
@@ -55,10 +57,10 @@ export function RegionFormScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Cadastro de Região</Text>
-        <Text style={styles.description}>Crie um novo registro usando a API .NET existente.</Text>
+        <Text style={[styles.title, { color: theme.colors.text }]}>Cadastro de Região</Text>
+        <Text style={[styles.description, { color: theme.colors.textMuted }]}>Crie um novo registro usando a API .NET existente.</Text>
       </View>
 
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={styles.flex}>
@@ -85,17 +87,17 @@ export function RegionFormScreen() {
             autoCapitalize="none"
           />
 
-          {formError ? <Text style={styles.formError}>{formError}</Text> : null}
+          {formError ? <Text style={[styles.formError, { color: theme.colors.danger }]}>{formError}</Text> : null}
 
           <Pressable
-            style={({ pressed }) => [styles.button, pressed && !submitting && styles.buttonPressed]}
+            style={({ pressed }) => [styles.button, { backgroundColor: theme.colors.primary }, pressed && !submitting && styles.buttonPressed]}
             onPress={handleSubmit}
             disabled={submitting}
           >
             {submitting ? (
-              <ActivityIndicator color="#FFFFFF" />
+              <ActivityIndicator color={theme.colors.text} />
             ) : (
-              <Text style={styles.buttonText}>Salvar região</Text>
+              <Text style={[styles.buttonText, { color: theme.colors.text }]}>Salvar região</Text>
             )}
           </Pressable>
         </ScrollView>
@@ -107,7 +109,6 @@ export function RegionFormScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0B1026",
     padding: 24,
     gap: 24,
   },
@@ -118,13 +119,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   title: {
-    color: "#FFFFFF",
     fontSize: 28,
     fontWeight: "800",
     lineHeight: 34,
   },
   description: {
-    color: "rgba(255, 255, 255, 0.75)",
     fontSize: 16,
     lineHeight: 22,
   },
@@ -133,14 +132,12 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   formError: {
-    color: "#FF8A80",
     fontSize: 14,
     lineHeight: 20,
   },
   button: {
     minHeight: 54,
     borderRadius: 18,
-    backgroundColor: "#00A8E8",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 8,
@@ -149,7 +146,6 @@ const styles = StyleSheet.create({
     opacity: 0.88,
   },
   buttonText: {
-    color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "800",
   },

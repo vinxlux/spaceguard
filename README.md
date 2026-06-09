@@ -1,35 +1,51 @@
 # SpaceGuard
 
-Aplicação completa para monitoramento de satélites e leitura de temperatura da Terra, com backend .NET e frontend mobile React Native consumindo exclusivamente a API REST existente.
+SpaceGuard é uma aplicação de monitoramento climático espacial com backend .NET e frontend mobile em React Native. O projeto exibe regiões monitoradas, alertas, métricas, cadastro e edição de dados, além de uma apresentação institucional e configurações de interface.
 
-## Objetivo
+## Visão Geral
 
-Simular um sistema profissional de monitoramento climático espacial, exibindo métricas, histórico térmico, alertas e operações de cadastro com persistência centralizada na API.
+O aplicativo foi pensado para simular um sistema profissional de acompanhamento de temperatura e satélites, consumindo a API REST existente e mantendo o fluxo de telas simples, objetivo e funcional.
+
+
+## Integrantes
+
+* Caio Felipe Silva - RM 564615
+* Davi Tagawa Schincaglia Lima Lemos - RM 563457
+* Luis Guilherme Borges Silva - RM 566548
+* Leonardo Zerbinatti de Sales - RM 562992
+* Vinícius Luis Exposito Morassi Garcia - RM 563340
 
 ## Tecnologias Utilizadas
 
-Backend:
+### Backend
 
-* ASP.NET Core 8
+* ASP.NET Core 6
 * C#
-* Entity Framework Core
+* Entity Framework Core 6
+* Npgsql.EntityFrameworkCore.PostgreSQL
 * PostgreSQL 16
-* Docker e Docker Compose
+* Docker
+* Docker Compose
 
-Frontend mobile:
+### Frontend mobile
 
-* React Native
 * Expo
+* React Native
 * TypeScript
 * React Navigation
 * Axios
-* ESLint e Prettier
+* react-native-gesture-handler
+* react-native-safe-area-context
+* react-native-screens
+* react-native-web
+* ESLint
+* Prettier
 
-## Estrutura da Solução
+## Estrutura do Projeto
 
-* `SpaceGuard/`: API .NET existente
-* `docker/`: composição dos containers
-* `mobile/`: aplicativo React Native com a interface de monitoramento
+* `backend/SpaceGuard/` - API .NET do projeto
+* `backend/docker/` - compose para subir API e banco PostgreSQL
+* `src/` - aplicação mobile em React Native
 
 ## Endpoints Mapeados da API
 
@@ -68,6 +84,10 @@ Alertas ambientais:
 * Alternância de tema claro/escuro
 * Seed automático de dados de demonstração quando a API estiver vazia
 
+## Configuração da API
+
+O cliente Axios está centralizado em `src/api/apiClient.ts`, com base URL configurável, fallback automático entre portas locais, timeout e tratamento global de erros.
+
 ## Estrutura de Pastas do Mobile
 
 ```text
@@ -90,44 +110,33 @@ src/
 
 ## Como Executar o Backend
 
+### Com Docker
+
 ```bash
-docker compose -f docker/docker-compose.yml up -d
+docker compose -f backend/docker/docker-compose.yml up -d
 ```
 
-API padrão:
+### Em desenvolvimento local
+
+```bash
+cd backend/SpaceGuard
+dotnet run
+```
+
+API padrão em desenvolvimento:
+
+* `http://localhost:5129/api`
+
+Quando executado via Docker, a API fica disponível em:
 
 * `http://localhost:8080/api`
 
 ## Como Executar o Mobile
 
 ```bash
-cd mobile
 npm install
 npm run start
 ```
-
-O cliente Axios tenta automaticamente as portas locais `5129` e `8080` para reduzir falhas de conexão entre o backend em desenvolvimento e o backend em Docker.
-Se precisar forçar um host específico, defina `EXPO_PUBLIC_API_BASE_URL`.
-
-## Configuração da API
-
-O cliente Axios está centralizado em `src/api/apiClient.ts`, com base URL configurável, fallback automático entre portas locais, timeout e tratamento global de erros.
-
-## Prints
-
-Espaço reservado para capturas da interface final.
-
-## Sugestão de Commits
-
-1. `Initial project setup`
-2. `Configure navigation`
-3. `Create reusable components`
-4. `Integrate .NET API`
-5. `Implement CRUD operations`
-6. `Add dashboard metrics`
-7. `Improve UI and responsiveness`
-8. `Configure ESLint and Prettier`
-9. `Final adjustments and bug fixes`
 
 ## Autor
 

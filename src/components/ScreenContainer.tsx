@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+import { useThemeMode } from "../theme/ThemeContext";
+
 type ScreenContainerProps = {
   title: string;
   description: string;
@@ -8,11 +10,13 @@ type ScreenContainerProps = {
 };
 
 export function ScreenContainer({ title, description, children }: ScreenContainerProps) {
+  const { theme } = useThemeMode();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <Text style={[styles.title, { color: theme.colors.text }]}>{title}</Text>
+        <Text style={[styles.description, { color: theme.colors.textMuted }]}>{description}</Text>
       </View>
 
       {children}
@@ -23,7 +27,6 @@ export function ScreenContainer({ title, description, children }: ScreenContaine
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0B1026",
     padding: 24,
     gap: 24,
   },
@@ -31,13 +34,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   title: {
-    color: "#FFFFFF",
     fontSize: 28,
     fontWeight: "800",
     lineHeight: 34,
   },
   description: {
-    color: "rgba(255, 255, 255, 0.75)",
     fontSize: 16,
     lineHeight: 22,
   },
