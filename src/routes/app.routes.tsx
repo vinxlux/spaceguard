@@ -6,6 +6,7 @@ import { DashboardScreen } from "../screens/DashboardScreen";
 import { RegionDetailsScreen } from "../screens/RegionDetailsScreen";
 import { RegionFormScreen } from "../screens/RegionFormScreen";
 import { RegionListScreen } from "../screens/RegionListScreen";
+import { ProjectPresentationScreen } from "../screens/ProjectPresentationScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +42,7 @@ function AppTabs() {
       <Tabs.Screen name="Dashboard" component={DashboardScreen} />
       <Tabs.Screen name="Regiões" component={RegionListScreen} />
       <Tabs.Screen name="Cadastro" component={RegionFormScreen} />
+      <Tabs.Screen name="Apresentação" component={ProjectPresentationScreen} />
       <Tabs.Screen name="Configurações" component={SettingsScreen} />
     </Tabs.Navigator>
   );
