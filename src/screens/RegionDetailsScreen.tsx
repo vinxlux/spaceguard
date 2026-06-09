@@ -1,10 +1,11 @@
-import { useMemo } from "react";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useMemo, useState } from "react";
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { AppStackParamList } from "../routes/app.routes";
+import { deleteRegion } from "../services/satelliteService";
 
 function formatDate(dateValue: string) {
   return new Date(dateValue).toLocaleDateString("pt-BR");
@@ -14,15 +15,31 @@ export function RegionDetailsScreen() {
   const route = useRoute<RouteProp<AppStackParamList, "Detalhes da Região">>();
   const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const region = route.params.region;
+  const [deleting, setDeleting] = useState(false);
 
   const dateLabel = useMemo(() => formatDate(region.dataLancamento), [region.dataLancamento]);
 
   function handleEditPress() {
-    navigation.navigate("Editar Região", { regionId: region.id });
+    navigation.navigate("Editar Região", { regionId: region.id, region });
   }
 
-  async function handleDeletePress() {
-    Alert.alert("Remover região", "Esta etapa será concluída no próximo commit do CRUD.");
+  function handleDeletePress() {
+    void confirmDelete();
+  }
+
+  async function confirmDelete() {
+    setDeleting(true);
+
+    try {
+      await deleteRegion(region.id);
+      Alert.alert("Sucesso", "Região excluída com sucesso.");
+      navigation.goBack();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Não foi possível excluir a região.";
+      Alert.alert("Falha ao excluir", message);
+    } finally {
+      setDeleting(false);
+    }
   }
 
   return (
@@ -50,8 +67,8 @@ export function RegionDetailsScreen() {
             <Text style={styles.primaryButtonText}>Editar região</Text>
           </Pressable>
 
-          <Pressable style={styles.secondaryButton} onPress={handleDeletePress}>
-            <Text style={styles.secondaryButtonText}>Excluir</Text>
+          <Pressable style={styles.secondaryButton} onPress={handleDeletePress} disabled={deleting}>
+            {deleting ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.secondaryButtonText}>Excluir</Text>}
           </Pressable>
         </View>
       </ScrollView>

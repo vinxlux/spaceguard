@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FormField } from "../components/FormField";
 import { getRegionById, updateRegion } from "../services/satelliteService";
 import { AppStackParamList } from "../routes/app.routes";
+import { RegionCardData } from "../types/region";
 
 export function RegionEditScreen() {
   const route = useRoute<RouteProp<AppStackParamList, "Editar Região">>();
@@ -16,9 +17,18 @@ export function RegionEditScreen() {
   const [nome, setNome] = useState("");
   const [paisOrigem, setPaisOrigem] = useState("");
   const [dataLancamento, setDataLancamento] = useState("");
+  const regionSnapshot = route.params.region;
 
   useEffect(() => {
     async function loadRegion() {
+      if (regionSnapshot) {
+        setNome(regionSnapshot.nome);
+        setPaisOrigem(regionSnapshot.paisOrigem);
+        setDataLancamento(regionSnapshot.dataLancamento.slice(0, 10));
+        setLoading(false);
+        return;
+      }
+
       try {
         const region = await getRegionById(route.params.regionId);
         setNome(region.nome);
@@ -33,7 +43,7 @@ export function RegionEditScreen() {
     }
 
     void loadRegion();
-  }, [route.params.regionId]);
+  }, [regionSnapshot, route.params.regionId]);
 
   async function handleSubmit() {
     const nomeTrimmed = nome.trim();
@@ -63,6 +73,18 @@ export function RegionEditScreen() {
       });
 
       Alert.alert("Sucesso", "Região atualizada com sucesso.");
+      if (regionSnapshot) {
+        const updatedRegion: RegionCardData = {
+          ...regionSnapshot,
+          nome: nomeTrimmed,
+          paisOrigem: paisOrigemTrimmed,
+          dataLancamento: launchDate.toISOString(),
+        };
+
+        navigation.replace("Detalhes da Região", { region: updatedRegion });
+        return;
+      }
+
       navigation.goBack();
     } catch (error) {
       const message = error instanceof Error ? error.message : "Não foi possível atualizar a região.";

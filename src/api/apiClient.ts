@@ -45,10 +45,13 @@ export async function requestWithFallback<T>(config: AxiosRequestConfig) {
 
 export function getApiErrorMessage(error: unknown) {
   if (isAxiosError(error)) {
+    if (!error.response || error.code === "ERR_NETWORK") {
+      return "Não foi possível se conectar à API.";
+    }
+
     return (
       error.response?.data?.message ??
       error.response?.data?.title ??
-      error.message ??
       "Não foi possível se conectar à API."
     );
   }

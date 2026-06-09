@@ -1,4 +1,4 @@
-import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -12,9 +12,9 @@ import { SettingsScreen } from "../screens/SettingsScreen";
 import { RegionCardData } from "../types/region";
 
 export type AppStackParamList = {
-  Tabs: undefined;
+  Tabs: NavigatorScreenParams<AppTabsParamList> | undefined;
   "Detalhes da Região": { region: RegionCardData };
-  "Editar Região": { regionId: number };
+  "Editar Região": { regionId: number; region?: RegionCardData };
 };
 
 export type AppTabsParamList = {

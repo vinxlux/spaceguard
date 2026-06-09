@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Alert, ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { FormField } from "../components/FormField";
 import { createRegion } from "../services/satelliteService";
+import { AppStackParamList } from "../routes/app.routes";
 
 export function RegionFormScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const [nome, setNome] = useState("");
   const [paisOrigem, setPaisOrigem] = useState("");
   const [dataLancamento, setDataLancamento] = useState(new Date().toISOString().slice(0, 10));

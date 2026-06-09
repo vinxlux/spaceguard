@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getAllRegions } from "../services/satelliteService";
 import { RegionCardData } from "../types/region";
 import { Satelite } from "../types/satellite";
-import { demoRegions, temperaturePalette } from "../constants/demoRegions";
+import { temperaturePalette } from "../constants/demoRegions";
 
 type UseRegionsResult = {
   regions: RegionCardData[];
@@ -40,15 +40,15 @@ export function useRegions(): UseRegionsResult {
       const apiRegions = await getAllRegions();
 
       if (apiRegions.length === 0) {
-        setRegions(demoRegions);
-        setErrorMessage("A API não retornou regiões. Exibindo dados simulados.");
+        setRegions([]);
+        setErrorMessage("Nenhuma região cadastrada na API.");
         return;
       }
 
       setRegions(mapApiRegionsToCards(apiRegions));
       setErrorMessage(null);
     } catch (error) {
-      setRegions(demoRegions);
+      setRegions([]);
       setErrorMessage(error instanceof Error ? error.message : "Não foi possível carregar as regiões.");
     } finally {
       setLoading(false);

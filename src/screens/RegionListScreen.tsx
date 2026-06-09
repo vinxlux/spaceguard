@@ -47,6 +47,14 @@ export function RegionListScreen() {
             </View>
           ) : null
         }
+        ListEmptyComponent={
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyStateTitle}>Nenhuma região cadastrada</Text>
+            <Text style={styles.emptyStateText}>
+              A lista fica vazia quando não há registros na API.
+            </Text>
+          </View>
+        }
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
       />
@@ -93,5 +101,23 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 14,
     lineHeight: 20,
+  },
+  emptyState: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 36,
+    gap: 8,
+  },
+  emptyStateTitle: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "800",
+    textAlign: "center",
+  },
+  emptyStateText: {
+    color: "rgba(255, 255, 255, 0.75)",
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: "center",
   },
 });
