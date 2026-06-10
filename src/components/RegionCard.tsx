@@ -37,7 +37,7 @@ export function RegionCard({ region, onPress }: RegionCardProps) {
 
         <View style={styles.metaBlock}>
           <Text style={[styles.label, { color: theme.colors.textMuted }]}>Origem</Text>
-          <Text style={[styles.metaValue, { color: theme.colors.text }]}>{region.origem === "api" ? "API .NET" : "Modo demo"}</Text>
+          <Text style={[styles.metaValue, { color: theme.colors.text }]}>{region.origem === "api" ? "API .NET" : "Dados locais"}</Text>
         </View>
       </View>
     </Pressable>

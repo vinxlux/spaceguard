@@ -127,6 +127,8 @@ API padrão em desenvolvimento:
 
 * `http://localhost:5129/api`
 
+Para Android físico, a API precisa estar acessível pela rede local do computador. Se estiver usando `dotnet run`, o backend agora escuta em `0.0.0.0:5129`, então o app pode alcançar o PC pela LAN quando estiver na mesma Wi-Fi.
+
 Quando executado via Docker, a API fica disponível em:
 
 * `http://localhost:8080/api`
@@ -136,6 +138,10 @@ Quando executado via Docker, a API fica disponível em:
 ```bash
 npm install
 npm run start
+```
+
+```powershell
+Set-Location "c:\Users\Vinicao\Desktop\spaceguard\backend\SpaceGuard"; dotnet run
 ```
 
 ## Autor

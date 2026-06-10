@@ -21,8 +21,8 @@ const settingsItems = [
   },
   {
     label: "Dados",
-    value: "API .NET + modo demo",
-    detail: "A aplicação usa dados reais quando disponíveis e simulação quando necessário.",
+    value: "API .NET",
+    detail: "A aplicação consulta o backend e exibe apenas os registros retornados pela API.",
   },
 ];
 

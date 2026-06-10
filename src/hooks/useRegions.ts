@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 
+import { temperaturePalette } from "../constants/demoRegions";
 import { getAllRegions } from "../services/satelliteService";
 import { RegionCardData } from "../types/region";
 import { Satelite } from "../types/satellite";
-import { temperaturePalette } from "../constants/demoRegions";
 
 type UseRegionsResult = {
   regions: RegionCardData[];
@@ -38,12 +38,6 @@ export function useRegions(): UseRegionsResult {
 
     try {
       const apiRegions = await getAllRegions();
-
-      if (apiRegions.length === 0) {
-        setRegions([]);
-        setErrorMessage("Nenhuma região cadastrada na API.");
-        return;
-      }
 
       setRegions(mapApiRegionsToCards(apiRegions));
       setErrorMessage(null);

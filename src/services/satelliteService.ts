@@ -1,3 +1,5 @@
+import { isAxiosError } from "axios";
+
 import { getApiErrorMessage, requestWithFallback } from "../api/apiClient";
 import { AlertaAmbiental, IndicadorAmbiental, RegionInput, Satelite } from "../types/satellite";
 
@@ -13,24 +15,48 @@ async function request<T>(config: Parameters<typeof requestWithFallback<T>>[0]) 
   }
 }
 
+function isConnectionError(error: unknown) {
+  return isAxiosError(error) && (!error.response || error.code === "ERR_NETWORK" || error.code === "ECONNABORTED");
+}
+
 export async function getAllRegions() {
-  return request<Satelite[]>({ method: "get", url: satellitePath });
+  try {
+    return await requestWithFallback<Satelite[]>({ method: "get", url: satellitePath });
+  } catch (error) {
+    throw new Error(getApiErrorMessage(error));
+  }
 }
 
 export async function getRegionById(id: number) {
-  return request<Satelite>({ method: "get", url: `${satellitePath}/${id}` });
+  try {
+    return await requestWithFallback<Satelite>({ method: "get", url: `${satellitePath}/${id}` });
+  } catch (error) {
+    throw new Error(getApiErrorMessage(error));
+  }
 }
 
 export async function createRegion(region: RegionInput) {
-  return request<void>({ method: "post", url: satellitePath, data: region });
+  try {
+    await requestWithFallback<void>({ method: "post", url: satellitePath, data: region });
+  } catch (error) {
+    throw new Error(getApiErrorMessage(error));
+  }
 }
 
 export async function updateRegion(region: RegionInput) {
-  return request<void>({ method: "put", url: satellitePath, data: region });
+  try {
+    await requestWithFallback<void>({ method: "put", url: satellitePath, data: region });
+  } catch (error) {
+    throw new Error(getApiErrorMessage(error));
+  }
 }
 
 export async function deleteRegion(id: number) {
-  return request<void>({ method: "delete", url: `${satellitePath}/${id}` });
+  try {
+    await requestWithFallback<void>({ method: "delete", url: `${satellitePath}/${id}` });
+  } catch (error) {
+    throw new Error(getApiErrorMessage(error));
+  }
 }
 
 export async function getAllIndicators() {
